@@ -4,12 +4,6 @@ const jwtKey =
   process.env.JWT_SECRET ||
   'add a .env file to root of project with the JWT_SECRET variable';
 
-
-module.exports = {
-  authenticate,
-};
-
-
 function authenticate(req, res, next) {
   const token = req.get('Authorization');
 
@@ -27,3 +21,8 @@ function authenticate(req, res, next) {
     });
   }
 }
+
+
+module.exports = {
+  authenticate,
+};

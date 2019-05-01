@@ -3,15 +3,15 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const db = require("../data/dbconfig");
 const { generateToken } = require("./token-service.js");
-const router = express();
-const User = require("../data/dbHelpers/studentDb");
+const router = express.Router();
+const { registerStudent } = require("../data/dbHelpers/studentDb");
 
 router.post("/register", (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
-  User.registerStudent(user)
+  registerStudent(user)
     .then(saved => {
       res.status(201).json(saved);
     })

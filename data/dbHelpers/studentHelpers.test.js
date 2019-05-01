@@ -1,14 +1,14 @@
-const students = require('./studentDb.js');
+const { getStudent, getStudentById, getAllStudents, registerStudent } = require('./studentDb.js');
 const db = require('../dbconfig.js');
 
-describe('the student db helpers', ()=>{
+describe('the student db helpers', () => {
     beforeEach(() => {
         return db("students").truncate();
-      });
-    describe('insertStudents fn', ()=>{
-        it('should insert a student into the database', async ()=>{
-            await students.insertStudent({
-                username:'bobTheBuilder',
+    });
+    describe('insertStudents fn', () => {
+        it('should insert a student into the database', async () => {
+            await registerStudent({
+                username: 'bobTheBuilder',
                 firstName: 'bob',
                 lastName: 'builder',
                 age: 12,
@@ -24,28 +24,28 @@ describe('the student db helpers', ()=>{
             expect(studentList[0].lastName).toBe('builder');
             expect(studentList[0].age).toBe(12);
             expect(studentList[0].school_id).toBe(1);
-            
+
 
         });
     });
 
-    describe('the getAllStudents fn', ()=>{
+    describe('the getAllStudents fn', () => {
 
         beforeEach(() => {
             return db("students").truncate();
-          });
+        });
 
-        it('should return a list of all students', async ()=>{
+        it('should return a list of all students', async () => {
 
-            await students.insertStudent({
-                username:'bobTheBuilder',
+            await registerStudent({
+                username: 'bobTheBuilder',
                 firstName: 'bob',
                 lastName: 'builder',
                 age: 12,
                 school_id: 1
             });
 
-            const studentList = await students.getAllStudents();
+            const studentList = await getAllStudents();
 
             expect(studentList.length).toBe(1);
             expect(studentList[0].username).toBe('bobTheBuilder');
@@ -54,7 +54,7 @@ describe('the student db helpers', ()=>{
             expect(studentList[0].lastName).toBe('builder');
             expect(studentList[0].age).toBe(12);
             expect(studentList[0].school_id).toBe(1);
-            
+
         })
     })
 
